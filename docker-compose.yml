@@ -14,13 +14,15 @@ services:
       - var_lib_mysql:/var/lib/mysql
 
   slurmdbd:
-    image: slurm-docker-cluster:19.05.1
+    build: 
+      context: .
     command: ["slurmdbd"]
     container_name: slurmdbd
     hostname: slurmdbd
     volumes:
       - etc_munge:/etc/munge
-      - etc_slurm:/etc/slurm
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
       - var_log_slurm:/var/log/slurm
     expose:
       - "6819"
@@ -28,13 +30,15 @@ services:
       - mysql
 
   slurmctld:
-    image: slurm-docker-cluster:19.05.1
+    build: 
+      context: .
     command: ["slurmctld"]
     container_name: slurmctld
     hostname: slurmctld
     volumes:
       - etc_munge:/etc/munge
-      - etc_slurm:/etc/slurm
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
     expose:
@@ -43,13 +47,15 @@ services:
       - "slurmdbd"
 
   c1:
-    image: slurm-docker-cluster:19.05.1
+    build: 
+      context: .
     command: ["slurmd"]
     hostname: c1
     container_name: c1
     volumes:
       - etc_munge:/etc/munge
-      - etc_slurm:/etc/slurm
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
     expose:
@@ -58,20 +64,117 @@ services:
       - "slurmctld"
 
   c2:
-    image: slurm-docker-cluster:19.05.1
+    build: 
+      context: .
     command: ["slurmd"]
     hostname: c2
     container_name: c2
     volumes:
       - etc_munge:/etc/munge
-      - etc_slurm:/etc/slurm
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
     expose:
       - "6818"
     depends_on:
       - "slurmctld"
-
+  c3:
+    build: 
+      context: .
+    command: ["slurmd"]
+    hostname: c3
+    container_name: c3
+    volumes:
+      - etc_munge:/etc/munge
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6818"
+    depends_on:
+      - "slurmctld"
+  c4:
+    build: 
+      context: .
+    command: ["slurmd"]
+    hostname: c4
+    container_name: c4
+    volumes:
+      - etc_munge:/etc/munge
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6818"
+    depends_on:
+      - "slurmctld"
+  c5:
+    build: 
+      context: .
+    command: ["slurmd"]
+    hostname: c5
+    container_name: c5
+    volumes:
+      - etc_munge:/etc/munge
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6818"
+    depends_on:
+      - "slurmctld"
+  c6:
+    build: 
+      context: .
+    command: ["slurmd"]
+    hostname: c6
+    container_name: c6
+    volumes:
+      - etc_munge:/etc/munge
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6818"
+    depends_on:
+      - "slurmctld"
+  c7:
+    build: 
+      context: .
+    command: ["slurmd"]
+    hostname: c7
+    container_name: c7
+    volumes:
+      - etc_munge:/etc/munge
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6818"
+    depends_on:
+      - "slurmctld"
+  c8:
+    build: 
+      context: .
+    command: ["slurmd"]
+    hostname: c8
+    container_name: c8
+    volumes:
+      - etc_munge:/etc/munge
+      - ./etc_slurm:/etc/slurm
+      - ./workplace:/workplace
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6818"
+    depends_on:
+      - "slurmctld"
 volumes:
   etc_munge:
   etc_slurm:
